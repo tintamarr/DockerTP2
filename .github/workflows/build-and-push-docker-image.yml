@@ -1,8 +1,8 @@
-name: Build and Push Docker Images
+name: Build and Push Docker Image
 
 on:
   workflow_run:
-    workflows: ["Test Backend"]  # Le nom du workflow que vous avez défini ci-dessus
+    workflows: ["Test Backend"]
     types:
       - completed
 
@@ -27,13 +27,13 @@ jobs:
       - name: Build image and push database
         uses: docker/build-push-action@v3
         with:
-          context: ./database  # Assurez-vous que le chemin est correct
+          context: ./database
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-database:latest
           push: true
 
       - name: Build image and push httpd
         uses: docker/build-push-action@v3
         with:
-          context: ./http-server  # Assurez-vous que le chemin est correct
+          context: ./http-server
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-httpd:latest
           push: true
