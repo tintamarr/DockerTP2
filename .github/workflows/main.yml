@@ -25,3 +25,35 @@ jobs:
       #finally build your app with the latest command
       - name: Build and test with Maven
         run : mvn clean verify -f simple-api/pom.xml
+
+  build-and-push-docker-image:
+    needs: test-backend
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
+
+      # Log in to Docker Hub
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PWD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # Build image and push backend
+      - name: Build image and push backend
+        uses: docker/build-push-action@v3
+        with:
+          context: ./simple-api
+          tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-simple-api:latest
+
+      # Build image and push database
+      - name: Build image and push database
+        uses: docker/build-push-action@v3
+        with:
+          context: ./database  # Assurez-vous que le chemin est correct
+          tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-database:latest
+
+      # Build image and push httpd
+      - name: Build image and push httpd
+        uses: docker/build-push-action@v3
+        with:
+          context: ./httpd  # Assurez-vous que le chemin est correct
+          tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-httpd:latest
