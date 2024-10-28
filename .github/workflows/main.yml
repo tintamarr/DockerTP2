@@ -30,7 +30,7 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Automatically provided by GitHub
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Your SonarCloud token
-        run: mvn sonar:sonar -Dsonar.projectKey=tintamarr_DockerTP2 -Dsonar.organization=tintamarr -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: mvn sonar:sonar -Dsonar.projectKey=tintamarr_DockerTP2 -Dsonar.organization=tintamarr -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} -f simple-api/pom.xml
 
 
   build-and-push-docker-image:
