@@ -1,12 +1,14 @@
-name: Build and Push Docker Images
+name: CI DevOps 2024
 
 on:
   push:
     branches:
       - master
+      - develop
   pull_request:
     branches:
       - master
+      - develop
 
 jobs:
   test-backend:
@@ -31,8 +33,8 @@ jobs:
 
   build-and-push-docker-image:
     needs: test-backend
-    runs-on: ubuntu-22.04
     if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.5.0
