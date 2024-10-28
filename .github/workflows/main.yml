@@ -55,5 +55,5 @@ jobs:
       - name: Build image and push httpd
         uses: docker/build-push-action@v3
         with:
-          context: ./httpd  # Assurez-vous que le chemin est correct
+          context: ./http-server # Assurez-vous que le chemin est correct
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-httpd:latest
