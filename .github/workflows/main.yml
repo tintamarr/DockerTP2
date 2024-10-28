@@ -26,6 +26,13 @@ jobs:
       - name: Build and test with Maven
         run : mvn clean verify -f simple-api/pom.xml
 
+      - name: SonarCloud Scan
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Automatically provided by GitHub
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Your SonarCloud token
+        run: mvn sonar:sonar -Dsonar.projectKey=tintamarr_DockerTP2 -Dsonar.organization=tintamarr -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+
   build-and-push-docker-image:
     needs: test-backend
     runs-on: ubuntu-22.04
